@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +9,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private GameObject destroyParticle;
+    [SerializeField]
+    private GameObject GameOverWindow;
+    [SerializeField]
+    private TextMeshProUGUI GameOverWindowScoreText;
 
     [SerializeField]
     private float PerRockSpawnDelay = 2f;
@@ -16,6 +21,9 @@ public class GameManager : MonoBehaviour
     [Header("Camera shaking")]
     public AnimationCurve curve;
     public float duration = .3f;
+
+    public delegate void GameUpdate();
+    public static GameUpdate GameRestart;
 
     private void OnEnable()
     {
@@ -51,7 +59,11 @@ public class GameManager : MonoBehaviour
         Destroy(rock);
         ScoreManger.Score++;
         StartCoroutine(shaking(duration,curve));
-        Destroy(destroyParticleClone, 2f);
+        
+        if(destroyParticleClone != null){
+            Destroy(destroyParticleClone, 2f);
+        }
+
         return;
 
     }
@@ -74,16 +86,11 @@ public class GameManager : MonoBehaviour
     }
 
     void GameOver(){
-        
-        GameObject[] rocks = GameObject.FindGameObjectsWithTag(TagManager.Rock_tag);
 
-        foreach (var rock in rocks)
-        {
-            Destroy(rock);
-        }
-
-        ScoreManger.Score = 0;
-        Spwaner.SpawnDelay = PerRockSpawnDelay;
+        PowerUps.PowerUpsEnable = false; 
+        GameOverWindow.SetActive(true);
+        GameOverWindowScoreText.text = ScoreManger.Score.ToString();
+        Time.timeScale = 0;
 
 
     }

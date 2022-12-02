@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3142844999049086902}
   m_Layer: 0
   m_Name: Aim
-  m_TagString: Untagged
+  m_TagString: Aim
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,6 +134,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46f84cf67a5a90146b4e62f01b45d91b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RockDestroyParticle: {fileID: 0}
   Aim_Red: {fileID: 21300000, guid: 6bfa0dd7ccab9be48ba40dce25d4820a, type: 3}
   Aim_Green: {fileID: 21300000, guid: b5ce686bf654e154b980e9c68ed621aa, type: 3}
+  trail: {fileID: 6026916713057450379, guid: f82dde512648f25458d48306faa8ca25, type: 3}

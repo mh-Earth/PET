@@ -8,6 +8,7 @@ TagManager:
   - rock
   - Aim
   - Menu_key
+  - Gameoverwindow
   layers:
   - Default
   - TransparentFX
@@ -54,9 +55,9 @@ TagManager:
   - name: rock
     uniqueID: 4045139649
     locked: 0
-  - name: Aim
-    uniqueID: 3019446985
-    locked: 0
   - name: UI
     uniqueID: 814286069
+    locked: 0
+  - name: Aim
+    uniqueID: 3019446985
     locked: 0

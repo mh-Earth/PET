@@ -16,6 +16,11 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Sprite PauseSprite;
 
+
+    public delegate void GameUpdate();
+    public static GameUpdate GameRestart;
+
+
     IEnumerator loadPlay()
     {
 
@@ -30,6 +35,12 @@ public class UIManager : MonoBehaviour
     {
 
         StartCoroutine(loadPlay());
+
+    }
+
+    public void MeinMenu(){
+
+        SceneManager.LoadScene(0);
 
     }
 
@@ -57,6 +68,26 @@ public class UIManager : MonoBehaviour
             PauseResume.GetComponent<Image>().sprite = PauseSprite;
 
         }
+
+    }
+
+    public void restart(){
+        GameRestart();
+        GameObject.FindGameObjectWithTag("Gameoverwindow").SetActive(false);
+        Time.timeScale = 1;
+        PowerUps.PowerUpsEnable = true;
+
+        
+        GameObject[] rocks = GameObject.FindGameObjectsWithTag(TagManager.Rock_tag);
+
+        foreach (var rock in rocks)
+        {
+            Destroy(rock);
+        }
+
+        ScoreManger.Score = 0;
+        Spwaner.SpawnDelay = GameManager.SpawnDelay;
+
 
     }
 

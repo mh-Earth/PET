@@ -6,11 +6,14 @@ public class PowerUps : MonoBehaviour
 {
 
     [Header("Power Up values")]
+    public static bool PowerUpsEnable = true;
     [SerializeField]
     private float dashSpeed = 4;
     private bool isDashing = false;
     [SerializeField]
     private float AimDashCoolDown = 20f;
+    [SerializeField]
+    private float AimDashCoolDownInStart = 60f;
     public static float AimDashCoolDownCounter = 0f;
     [SerializeField]
     private GameObject spawner;
@@ -32,9 +35,22 @@ public class PowerUps : MonoBehaviour
     private List<GameObject> inDashingRocks = new List<GameObject>();
 
 
-    private void Start() {
-        
+    private void OnEnable()
+    {
+
+        UIManager.GameRestart += reset;
+    }
+
+    private void OnDisable()
+    {
+        UIManager.GameRestart += reset;
+    }
+
+    private void Start()
+    {
+
         AimSpriteRenderer = Aim.GetComponent<SpriteRenderer>();
+        AimDashCoolDownCounter = Time.time + AimDashCoolDownInStart;
 
 
     }
@@ -42,14 +58,19 @@ public class PowerUps : MonoBehaviour
     private void Update()
     {
 
-        if (Input.GetKey(KeyCode.Alpha1) && Time.time > AimDashCoolDownCounter)
+        if (PowerUpsEnable)
         {
+
+
+            if ((Input.GetKey(KeyCode.Alpha1) || Input.GetMouseButtonDown(1)) && Time.time > AimDashCoolDownCounter)
+            {
 
                 AimDashCoolDownCounter = Time.time + AimDashCoolDown;
                 StartCoroutine(AimDash());
 
-        }
+            }
 
+        }
 
 
     }
@@ -72,17 +93,22 @@ public class PowerUps : MonoBehaviour
         foreach (var rock in activeRocks)
         {
 
-            while (rock != null && Vector3.Distance(Aim.transform.position, rock.transform.position) > 0.1f)
+            if (rock != null)
             {
-                AimSpriteRenderer.sprite = DashingAimSprite;
-                Aim.transform.position = Vector3.MoveTowards(Aim.transform.position, rock.transform.position, dashSpeed * Time.deltaTime);
-                yield return null;
+
+
+                while (rock != null && Vector3.Distance(Aim.transform.position, rock.transform.position) > 0.1f)
+                {
+                    AimSpriteRenderer.sprite = DashingAimSprite;
+                    Aim.transform.position = Vector3.MoveTowards(Aim.transform.position, rock.transform.position, dashSpeed * Time.deltaTime);
+                    yield return null;
+
+                }
+
+                doAimDash(rock);
+
 
             }
-
-            doAimDash(rock);
-
-
 
         }
 
@@ -107,7 +133,7 @@ public class PowerUps : MonoBehaviour
         activeRocks.Clear();
         activeRocks.AddRange(inDashingRocks);
         inDashingRocks.Clear();
-        
+
         yield return new WaitForSeconds(.15f);
         AimSpriteRenderer.sprite = DashingEndAimSprite;
         yield break;
@@ -115,6 +141,13 @@ public class PowerUps : MonoBehaviour
     }
 
 
+    void reset()
+    {
+
+        AimDashCoolDownCounter = Time.time + AimDashCoolDownInStart;
+
+
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -127,7 +160,8 @@ public class PowerUps : MonoBehaviour
 
         }
 
-        else if(other.CompareTag(TagManager.Rock_tag) && isDashing){
+        if (isDashing && other.CompareTag(TagManager.Rock_tag))
+        {
 
             inDashingRocks.Add(other.gameObject);
 
