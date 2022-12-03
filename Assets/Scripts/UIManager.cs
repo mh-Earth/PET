@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
+
 public class UIManager : MonoBehaviour
 {
 
@@ -20,6 +22,15 @@ public class UIManager : MonoBehaviour
     public delegate void GameUpdate();
     public static GameUpdate GameRestart;
 
+    private void Awake() {
+        
+        Controls UIControl =  new Controls();
+        UIControl.UI.Enable();
+        UIControl.UI.PauseResume.performed += _ => Pause();
+
+
+
+    }
 
     IEnumerator loadPlay()
     {
@@ -83,6 +94,12 @@ public class UIManager : MonoBehaviour
         foreach (var rock in rocks)
         {
             Destroy(rock);
+        }
+        GameObject[] RockDestroy = GameObject.FindGameObjectsWithTag("RockDestory");
+
+        foreach (var RockDestroys in RockDestroy)
+        {
+            Destroy(RockDestroys);
         }
 
         ScoreManger.Score = 0;

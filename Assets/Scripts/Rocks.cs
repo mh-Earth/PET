@@ -33,7 +33,8 @@ public class Rocks : MonoBehaviour
 
         if (other.gameObject.CompareTag(TagManager.Egg_Tag))
         {
-            isGameOver();
+            // isGameOver();
+            Destroy(this.gameObject);
 
 
         }

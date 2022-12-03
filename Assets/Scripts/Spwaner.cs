@@ -11,7 +11,8 @@ public class Spwaner : MonoBehaviour
     [SerializeField]
     private GameObject[] Rocks;
     public static float SpawnDelay;
-    private float maxSpawnDelay = .70f;
+    [SerializeField]
+    private float maxSpawnDelay = .5f;
     private bool isFirst = true;
 
     private void OnEnable()
@@ -40,15 +41,16 @@ public class Spwaner : MonoBehaviour
             Vector3 pos = SpawnerList[Random.Range(0, SpawnerList.Length)].transform.position;
             GameObject rock = Rocks[Random.Range(0, Rocks.Length)];
 
-            Instantiate(rock, pos, Quaternion.identity);
-            // print("spawnnnnnn");
+
             if (SpawnDelay > maxSpawnDelay)
             {
 
                 SpawnDelay = SpawnDelay - .01f;
 
             }
-            // print(SpawnDelay);
+            
+
+            Instantiate(rock, pos, Quaternion.identity);
             yield return new WaitForSeconds(SpawnDelay);
         }
 

@@ -9,6 +9,8 @@ TagManager:
   - Aim
   - Menu_key
   - Gameoverwindow
+  - AimClone
+  - RockDestory
   layers:
   - Default
   - TransparentFX

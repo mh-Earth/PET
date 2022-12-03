@@ -1,0 +1,136 @@
+{
+    "name": "Controls",
+    "maps": [
+        {
+            "name": "Aim",
+            "id": "d8739ee8-2be7-4a02-ab6e-a30c3d64e692",
+            "actions": [
+                {
+                    "name": "shoot",
+                    "type": "Button",
+                    "id": "bce41bed-978b-40c8-adff-16c967ca76b4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "990814e1-2c0b-4b62-908c-8682e09633b4",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "PowerUps",
+            "id": "78dfc313-9e0b-41e7-92c0-e3ab9278ee6b",
+            "actions": [
+                {
+                    "name": "AImDash",
+                    "type": "Button",
+                    "id": "dce16884-5cc6-472e-bc40-45afc7cd6186",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "GhostFire",
+                    "type": "Button",
+                    "id": "cec77895-3003-4967-9cc7-f7c235357079",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "5944fc53-84a0-4167-bd05-13cefe458d87",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AImDash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0e0cd8bd-19ba-4a65-a1a4-f1fc680ccbb8",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AImDash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "41b814c6-8902-4a65-89d7-096c5ae5f15e",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GhostFire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "4bb40eef-913d-4996-922e-feff4a053f8c",
+            "actions": [
+                {
+                    "name": "Left Click",
+                    "type": "Button",
+                    "id": "e9a1b64c-9637-4c36-9c16-4bc65c66e7c8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "PauseResume",
+                    "type": "Button",
+                    "id": "1698b82e-09ed-4c33-b0b2-c833c3d5b4af",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a873dd40-e46a-4d83-a583-fcbad23efb68",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Left Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a3c56b11-163a-42ab-80a4-07682ef89a4b",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PauseResume",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

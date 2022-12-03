@@ -9,6 +9,8 @@ public class Debug : MonoBehaviour
     private TextMeshProUGUI RockInfo;
     [SerializeField]
     private TextMeshProUGUI AimDashCoolDown;
+    [SerializeField]
+    private TextMeshProUGUI GhostFireCoolDown;
 
     private void OnEnable()
     {
@@ -29,7 +31,8 @@ public class Debug : MonoBehaviour
 
     private void LateUpdate() {
         
-        AimDashCoolDown.text = (PowerUps.AimDashCoolDownCounter - Time.time).ToString();
+        AimDashCoolDown.text = ((int)PowerUps.AimDashCoolDownCounter - (int)Time.time).ToString() + "s";
+        GhostFireCoolDown.text = ((int)PowerUps.GhostFireCoolDownCounter - (int)Time.time).ToString() + "s";
         SpawnDelay.text = "SpawnDelay:" + Spwaner.SpawnDelay.ToString() +"s";
 
     }

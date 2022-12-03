@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+
 public class MouseController : MonoBehaviour
 {
 
@@ -20,7 +22,35 @@ public class MouseController : MonoBehaviour
     // Delegates
     public delegate void rockClicked(GameObject rock);
     public static rockClicked isRockClicked;
-    private float canClickDelay;
+    [SerializeField]
+    private List<GameObject> InAimRange = new List<GameObject>();
+
+
+
+    private void Awake()
+    {
+
+
+        Controls AimControl = new Controls();
+        AimControl.Aim.Enable();
+        AimControl.Aim.shoot.performed += _ => Shoot();
+    }
+
+
+    private void Shoot()
+    {
+
+        if (InAimRange.Count > 0)
+        {
+
+            isRockClicked(InAimRange[0]);
+
+        }
+
+
+    }
+
+
 
 
 
@@ -33,17 +63,14 @@ public class MouseController : MonoBehaviour
 
     void FollowMouse()
     {
-
-
-
-        Vector3 mouse = Input.mousePosition;
-        mouse.z = 10;
-
-        transform.position = Camera.main.ScreenToWorldPoint(mouse);
+        Vector3 Pos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Pos.z = 10;
+        transform.position = Pos;
 
     }
 
-    void AimTrail(){
+    void AimTrail()
+    {
 
         GameObject a = Instantiate(trail, transform.position, Quaternion.identity);
         Destroy(a, .2f);
@@ -55,16 +82,32 @@ public class MouseController : MonoBehaviour
     private void Update()
     {
 
+
+        if (TrailEnable)
+        {
+
+            AimTrail();
+
+        }
+
         if (AimControlEnable)
         {
 
             FollowMouse();
         }
 
-        if (TrailEnable)
+
+    }
+
+
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag(TagManager.Rock_tag))
         {
-            
-            AimTrail();
+
+            spriteRenderer.sprite = Aim_Red;
+            InAimRange.Add(other.gameObject);
 
         }
 
@@ -75,22 +118,6 @@ public class MouseController : MonoBehaviour
     private void OnTriggerStay2D(Collider2D other)
     {
 
-        if (other.CompareTag(TagManager.Rock_tag))
-        {
-
-            spriteRenderer.sprite = Aim_Red;
-
-            if (Input.GetMouseButtonDown(0))
-            {
-
-                // transform.position = other.transform.position;
-                isRockClicked(other.gameObject);
-                return;
-
-
-            }
-
-        }
         if (other.CompareTag(TagManager.Menu_key_tag))
         {
 
@@ -108,6 +135,7 @@ public class MouseController : MonoBehaviour
         {
 
             spriteRenderer.sprite = Aim_Green;
+            InAimRange.Remove(other.gameObject);
 
 
         }
