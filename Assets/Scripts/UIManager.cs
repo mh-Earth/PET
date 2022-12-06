@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
 
 public class UIManager : MonoBehaviour
 {
@@ -17,14 +16,17 @@ public class UIManager : MonoBehaviour
     private Sprite ResumeSprite;
     [SerializeField]
     private Sprite PauseSprite;
+    [SerializeField]
+    private GameObject PauseWindow;
 
 
     public delegate void GameUpdate();
     public static GameUpdate GameRestart;
 
-    private void Awake() {
-        
-        Controls UIControl =  new Controls();
+    private void Awake()
+    {
+
+        Controls UIControl = new Controls();
         UIControl.UI.Enable();
         UIControl.UI.PauseResume.performed += _ => Pause();
 
@@ -49,7 +51,8 @@ public class UIManager : MonoBehaviour
 
     }
 
-    public void MeinMenu(){
+    public void MeinMenu()
+    {
 
         SceneManager.LoadScene(0);
 
@@ -65,30 +68,45 @@ public class UIManager : MonoBehaviour
 
     public void Pause()
     {
-        if (Time.timeScale == 0)
+        
+        if (GameManager.GameStatus == TagManager.GameRunningStatus || GameManager.GameStatus == TagManager.PauseStatus)
         {
 
-            Time.timeScale = 1;
-            PauseResume.GetComponent<Image>().sprite = ResumeSprite;
+            if (Time.timeScale == 0)
+            {
+                Time.timeScale = 1;
+                PauseResume.GetComponent<Image>().sprite = ResumeSprite;
+                PauseWindow.SetActive(false);
+                GameManager.GameStatus = TagManager.GameRunningStatus;
+            }
+
+            else
+            {
+
+                GameManager.GameStatus = TagManager.PauseStatus;
+                PauseWindow.SetActive(true);
+                Time.timeScale = 0;
+                PauseResume.GetComponent<Image>().sprite = PauseSprite;
+
+            }
+
         }
-
-        else
-        {
-
-            Time.timeScale = 0;
-            PauseResume.GetComponent<Image>().sprite = PauseSprite;
-
-        }
-
     }
 
-    public void restart(){
+    public void restart()
+    {
         GameRestart();
-        GameObject.FindGameObjectWithTag("Gameoverwindow").SetActive(false);
+        if(GameManager.GameStatus == TagManager.GameOverStatus){
+            GameObject.FindGameObjectWithTag("Gameoverwindow").SetActive(false);
+        }
+        else{
+            PauseWindow.SetActive(false);
+        }
+
         Time.timeScale = 1;
         PowerUps.PowerUpsEnable = true;
 
-        
+
         GameObject[] rocks = GameObject.FindGameObjectsWithTag(TagManager.Rock_tag);
 
         foreach (var rock in rocks)
@@ -104,6 +122,7 @@ public class UIManager : MonoBehaviour
 
         ScoreManger.Score = 0;
         Spwaner.SpawnDelay = GameManager.SpawnDelay;
+        GameManager.GameStatus = TagManager.GameRunningStatus;
 
 
     }

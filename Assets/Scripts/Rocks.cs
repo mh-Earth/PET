@@ -5,7 +5,6 @@ public class Rocks : MonoBehaviour
 
 
     public static float speed = 2;
-    // public static float ;
 
     private Vector3 EggPos;
 
@@ -16,7 +15,6 @@ public class Rocks : MonoBehaviour
     private void Start()
     {
         EggPos = GameObject.FindGameObjectWithTag(TagManager.Egg_Tag).transform.position;
-        // speed = Random.Range(speed,speed+.5f);
 
     }
 
@@ -33,8 +31,7 @@ public class Rocks : MonoBehaviour
 
         if (other.gameObject.CompareTag(TagManager.Egg_Tag))
         {
-            // isGameOver();
-            Destroy(this.gameObject);
+            isGameOver();
 
 
         }

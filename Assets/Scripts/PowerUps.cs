@@ -89,7 +89,7 @@ public class PowerUps : MonoBehaviour
 
         if (PowerUpsEnable && Time.time > AimDashCoolDownCounter)
         {
-
+            PowerUpsEnable = false;
             AimDashCoolDownCounter = Time.time + AimDashCoolDown;
             StartCoroutine(AimDash());
 
@@ -106,8 +106,10 @@ public class PowerUps : MonoBehaviour
         if (PowerUpsEnable && Time.time > GhostFireCoolDownCounter)
         {
 
+            PowerUpsEnable = false;
             GhostFireCoolDownCounter = Time.time + GhostFireCoolDown;
             StartCoroutine(GhostFire());
+
         }
 
 
@@ -174,6 +176,7 @@ public class PowerUps : MonoBehaviour
 
         yield return new WaitForSeconds(.15f);
         AimSpriteRenderer.sprite = DashingEndAimSprite;
+        PowerUpsEnable = true;
         yield break;
 
     }
@@ -244,6 +247,7 @@ public class PowerUps : MonoBehaviour
 
 
 
+        PowerUpsEnable = true;
         yield break;
 
     }
@@ -254,6 +258,7 @@ public class PowerUps : MonoBehaviour
     {
 
         AimDashCoolDownCounter = Time.time + AimDashCoolDownInStart;
+        GhostFireCoolDownCounter = Time.time + GhostFireCoolDownInStart;
 
 
     }

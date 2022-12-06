@@ -11,6 +11,7 @@ TagManager:
   - Gameoverwindow
   - AimClone
   - RockDestory
+  - PauseWindow
   layers:
   - Default
   - TransparentFX

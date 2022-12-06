@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float PerRockSpawnDelay = 2f;
     public static float SpawnDelay;
-
+    public static string GameStatus = TagManager.GameRunningStatus;
     [Header("Camera shaking")]
     public AnimationCurve curve;
     public float duration = .3f;
@@ -44,12 +44,6 @@ public class GameManager : MonoBehaviour
         SpawnDelay = PerRockSpawnDelay;
     }
 
-
-    private void Start()
-    {
-        // Setting Per rock spawn time
-
-    }
 
 
     public void rockDestroyed(GameObject rock)
@@ -85,8 +79,9 @@ public class GameManager : MonoBehaviour
         Camera.main.transform.position = startPosition;
     }
 
-    void GameOver(){
 
+    void GameOver(){
+        GameStatus = TagManager.GameOverStatus;
         PowerUps.PowerUpsEnable = false; 
         GameOverWindow.SetActive(true);
         GameOverWindowScoreText.text = ScoreManger.Score.ToString();
